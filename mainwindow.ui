@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>717</width>
-    <height>431</height>
+    <width>766</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>720</width>
+      <width>771</width>
       <height>400</height>
      </rect>
     </property>
@@ -35,7 +35,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>521</width>
+        <width>581</width>
         <height>321</height>
        </rect>
       </property>
@@ -43,9 +43,9 @@
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>10</y>
-        <width>91</width>
+        <width>101</width>
         <height>21</height>
        </rect>
       </property>
@@ -61,9 +61,9 @@
      <widget class="QComboBox" name="comboBox_2">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>40</y>
-        <width>161</width>
+        <width>121</width>
         <height>22</height>
        </rect>
       </property>
@@ -71,11 +71,16 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentText">
-       <string>№</string>
+       <string>Id</string>
       </property>
       <property name="placeholderText">
        <string/>
       </property>
+      <item>
+       <property name="text">
+        <string>Id</string>
+       </property>
+      </item>
       <item>
        <property name="text">
         <string>№</string>
@@ -105,9 +110,9 @@
      <widget class="QLabel" name="label_7">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>120</y>
-        <width>131</width>
+        <width>101</width>
         <height>21</height>
        </rect>
       </property>
@@ -123,7 +128,7 @@
      <widget class="QPushButton" name="pushButton_3">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>180</y>
         <width>101</width>
         <height>31</height>
@@ -141,7 +146,7 @@
      <widget class="QLineEdit" name="lineEdit_6">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>150</y>
         <width>101</width>
         <height>20</height>
@@ -156,7 +161,7 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Додати нову запис</string>
+      <string>Додати новий запис</string>
      </attribute>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
@@ -339,7 +344,7 @@
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>580</x>
+        <x>620</x>
         <y>120</y>
         <width>75</width>
         <height>23</height>
@@ -354,7 +359,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>521</width>
+        <width>581</width>
         <height>321</height>
        </rect>
       </property>
@@ -362,9 +367,9 @@
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>10</y>
-        <width>101</width>
+        <width>81</width>
         <height>21</height>
        </rect>
       </property>
@@ -380,9 +385,9 @@
      <widget class="QLineEdit" name="lineEdit_5">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>70</y>
-        <width>171</width>
+        <width>141</width>
         <height>20</height>
        </rect>
       </property>
@@ -395,9 +400,9 @@
      <widget class="QComboBox" name="comboBox">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>600</x>
         <y>40</y>
-        <width>161</width>
+        <width>141</width>
         <height>22</height>
        </rect>
       </property>
@@ -405,11 +410,16 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentText">
-       <string>№</string>
+       <string>Id</string>
       </property>
       <property name="placeholderText">
        <string/>
       </property>
+      <item>
+       <property name="text">
+        <string>Id</string>
+       </property>
+      </item>
       <item>
        <property name="text">
         <string>№</string>
@@ -436,6 +446,16 @@
        </property>
       </item>
      </widget>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_3">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>70</y>
+        <width>141</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -444,7 +464,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>717</width>
+     <width>766</width>
      <height>21</height>
     </rect>
    </property>

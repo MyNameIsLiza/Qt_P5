@@ -19,7 +19,7 @@ public:
     void static fillByObject(QTableWidget *tw, RailWayStation book);
     void static fillHeaders(QTableWidget *tw, QList<QString> list);
     int get_id(){
-        return number;
+        return id;
     }
     void set_id(int Id){
         id = Id;
@@ -65,23 +65,22 @@ public:
         dispatch_time = Dispatch_time;
     };
 
-    static RailWayStation search_by_id(QList<RailWayStation> books, qsizetype id){
-
-        RailWayStation search;
+    static QList<RailWayStation> search_by_id(QList<RailWayStation> books, int id){
+        QList<RailWayStation> search;
         foreach(RailWayStation book, books){
             if(book.id == id){
-                search = book;
+                search.append(book);
             }
         }
         return search;
     };
 
-    static RailWayStation search_by_number(QList<RailWayStation> books, qsizetype number){
+    static QList<RailWayStation> search_by_number(QList<RailWayStation> books, int number){
 
-        RailWayStation search;
+        QList<RailWayStation> search;
         foreach(RailWayStation book, books){
             if(book.number == number){
-                search = book;
+                search.append(book);
             }
         }
         return search;
@@ -130,8 +129,8 @@ public:
         }
         return search;
     };
-    static bool compare_by_id (RailWayStation i,RailWayStation j) { return (i.id <j.id); }
-    static bool compare_by_number (RailWayStation i,RailWayStation j) { return (i.get_number()<j.get_number()); }
+    static bool compare_by_id (RailWayStation i,RailWayStation j) { return (i.get_id() < j.get_id()); }
+    static bool compare_by_number (RailWayStation i,RailWayStation j) { return (i.get_number() < j.get_number()); }
     static bool compare_by_destination_station (RailWayStation i,RailWayStation j) { return (i.get_destination_station()<j.get_destination_station()); }
     static bool compare_by_dispatch_station (RailWayStation i,RailWayStation j) { return (i.get_dispatch_station()<j.get_dispatch_station()); }
     static bool compare_by_destination_time (RailWayStation i,RailWayStation j) { return (i.get_destination_time()<j.get_destination_time()); }
