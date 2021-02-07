@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(770,410);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->dateTimeEdit->setDate(QDate::currentDate());
@@ -238,7 +239,7 @@ void MainWindow::on_lineEdit_6_textChanged(const QString &arg1)
         {
             if(!c.isNumber())
             {
-                message("Помилка", "Ви повинні ввести число від 1 до 999");
+                message("Помилка", "Ви повинні ввести число");
                 text.chop(1);
                 ui->lineEdit_6->setText(text);
                 return;
@@ -299,6 +300,12 @@ void MainWindow::on_pushButton_4_clicked()
 QString filename ="trains.xml";
 void MainWindow::on_pushButton_5_clicked()
 {
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, "Важливо", "Ви впевнені, що хочете переписати файл?",
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::No) {
+        return;
+      }
     QFile file(filename);
     if( !file.open(QIODevice::WriteOnly) ) {
         message( "Помилка","Не вдалось відкрити/створити файл на запис");
