@@ -4,8 +4,8 @@
 #include<QMessageBox>
 #include<QDateTime>
 #include<iostream>
-//#include<QDat>
-
+#include<QFile>
+#include<QXmlStreamWriter>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,18 +40,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 QList<RailWayStation> list;
-//QTime time0 = new QTime(0, 0, 0);
+
 void MainWindow::on_pushButton_clicked()
 {
     RailWayStation train;
     QString number = ui->lineEdit->text();
-    QString destination_station = ui->lineEdit_2->text();
-    QString dispatch_station = ui->lineEdit_3->text();
+    QString dispatch_station = ui->lineEdit_2->text();
+    QString destination_station = ui->lineEdit_3->text();
     QString destination_time = ui->dateTimeEdit_2->dateTime().toString("yyyy.MM.dd hh:mm");
     QString dispatch_time = ui->dateTimeEdit->dateTime().toString("yyyy.MM.dd hh:mm");// && destination_time!="" && dispatch_time!=""
     if(destination_station!="" && dispatch_station!=""){
         if(destination_time > dispatch_time){
-            if(destination_station == dispatch_station){
+            if(destination_station != dispatch_station){
             train.set_id(list.length()+1);
             train.set_number(number.toInt());
             train.set_destination_station(destination_station);
@@ -86,8 +86,8 @@ void RailWayStation::fillByList(QTableWidget *tw, QList<RailWayStation> list){
         tw->setRowCount(tw->rowCount()+1);
         tw->setItem(tw->rowCount()-1, 0, new QTableWidgetItem(QString::number(train.get_id())));
         tw->setItem(tw->rowCount()-1, 1, new QTableWidgetItem(QString::number(train.get_number())));
-        tw->setItem(tw->rowCount()-1, 2, new QTableWidgetItem(train.get_destination_station()));
-        tw->setItem(tw->rowCount()-1, 3, new QTableWidgetItem(train.get_dispatch_station()));
+        tw->setItem(tw->rowCount()-1, 2, new QTableWidgetItem(train.get_dispatch_station()));
+        tw->setItem(tw->rowCount()-1, 3, new QTableWidgetItem(train.get_destination_station()));
         tw->setItem(tw->rowCount()-1, 4, new QTableWidgetItem(train.get_dispatch_time()));
         tw->setItem(tw->rowCount()-1, 5, new QTableWidgetItem(train.get_destination_time()));
     }
@@ -106,8 +106,8 @@ void RailWayStation::fillByObject(QTableWidget *tw, RailWayStation train){
     tw->setRowCount(tw->rowCount()+1);
     tw->setItem(tw->rowCount()-1, 0, new QTableWidgetItem(QString::number(train.get_id())));
     tw->setItem(tw->rowCount()-1, 1, new QTableWidgetItem(QString::number(train.get_number())));
-    tw->setItem(tw->rowCount()-1, 2, new QTableWidgetItem(train.get_destination_station()));
-    tw->setItem(tw->rowCount()-1, 3, new QTableWidgetItem(train.get_dispatch_station()));
+    tw->setItem(tw->rowCount()-1, 2, new QTableWidgetItem(train.get_dispatch_station()));
+    tw->setItem(tw->rowCount()-1, 3, new QTableWidgetItem(train.get_destination_station()));
     tw->setItem(tw->rowCount()-1, 4, new QTableWidgetItem(train.get_dispatch_time()));
     tw->setItem(tw->rowCount()-1, 5, new QTableWidgetItem(train.get_destination_time()));
 }
@@ -273,4 +273,135 @@ void MainWindow::on_pushButton_2_clicked()
     else{
         message("Помилка", "Потрібних записів не знайдено");
     }
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    for(int i = 0; i <list.length(); i++){
+    if(ui->tableWidget->item(i, 5)->text() < QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm"))
+    {
+        for(int j = 0; j < ui->tableWidget->columnCount(); j++){
+        ui->tableWidget->item(i, j)->setBackground(QColor::fromRgb(255, 180, 153));
+    }
+    }else if(ui->tableWidget->item(i, 4)->text() < QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm"))
+    {
+        for(int j = 0; j <ui->tableWidget->columnCount(); j++){
+        ui->tableWidget->item(i, j)->setBackground(QColor::fromRgb(254, 243, 123));
+        }
+    }else
+    {
+        for(int j = 0; j <ui->tableWidget->columnCount(); j++){
+        ui->tableWidget->item(i, j)->setBackground(QColor::fromRgb(187, 249, 129));
+        }
+    }
+}
+}
+QString filename ="trains.xml";
+void MainWindow::on_pushButton_5_clicked()
+{
+    QFile file(filename);
+    if( !file.open(QIODevice::WriteOnly) ) {
+        message( "Помилка","Не вдалось відкрити/створити файл на запис");
+        return;
+    } else {
+        QXmlStreamWriter xmlWriter(&file);
+        xmlWriter.setAutoFormatting(true);
+        xmlWriter.writeStartElement("Trains");
+        int i = 0;
+        while (i < list.length()) {
+            xmlWriter.writeStartElement("Train");
+            xmlWriter.writeStartElement("id");
+            xmlWriter.writeAttribute("QString", RailWayStation::get_id(list.at(i)));
+            xmlWriter.writeEndElement();
+
+            xmlWriter.writeStartElement("number");
+            xmlWriter.writeAttribute("QString", RailWayStation::get_number(list.at(i)));
+            xmlWriter.writeEndElement();
+
+            xmlWriter.writeStartElement("dispatch_station");
+            xmlWriter.writeAttribute("QString", RailWayStation::get_dispatch_station(list.at(i)));
+            xmlWriter.writeEndElement();
+
+            xmlWriter.writeStartElement("destination_station");
+            xmlWriter.writeAttribute("QString", RailWayStation::get_destination_station(list.at(i)));
+            xmlWriter.writeEndElement();
+
+            xmlWriter.writeStartElement("dispatch_time");
+            xmlWriter.writeAttribute("QString", RailWayStation::get_dispatch_time(list.at(i)));
+            xmlWriter.writeEndElement();
+
+            xmlWriter.writeStartElement("destination_time");
+            xmlWriter.writeAttribute("QString", RailWayStation::get_destination_time(list.at(i)));
+            xmlWriter.writeEndElement();
+            i++;
+            xmlWriter.writeEndElement();
+        }
+        xmlWriter.writeEndElement();
+        xmlWriter.writeEndDocument();
+        file.close();
+    }
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    QList<RailWayStation> new_list;
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::critical(this,"Помилка",
+            "Не вдалося відкрити файл",
+            QMessageBox::Ok);
+            return;
+    }
+    QXmlStreamReader xmlReader(&file);
+    RailWayStation t;
+    while(!xmlReader.atEnd() && !xmlReader.hasError()) {
+
+        QXmlStreamReader::TokenType token = xmlReader.readNext();
+        if(token == QXmlStreamReader::StartDocument) {
+                        continue;
+                }
+                if(token == QXmlStreamReader::StartElement) {
+
+        if(xmlReader.name().toString() == "id") {
+            QXmlStreamAttribute a = xmlReader.attributes().at(0);
+            t.set_id(a.value().toInt());
+        }
+        if(xmlReader.name().toString() == "number") {
+            QXmlStreamAttribute a = xmlReader.attributes().at(0);
+            t.set_number(a.value().toInt());
+        }
+        if(xmlReader.name().toString() == "dispatch_station") {
+            QXmlStreamAttribute a = xmlReader.attributes().at(0);
+            t.set_dispatch_station(a.value().toString());
+        }
+        if(xmlReader.name().toString() == "destination_station") {
+            QXmlStreamAttribute a = xmlReader.attributes().at(0);
+            t.set_destination_station(a.value().toString());
+        }
+        if(xmlReader.name().toString() == "dispatch_time") {
+            QXmlStreamAttribute a = xmlReader.attributes().at(0);
+            t.set_dispatch_time(a.value().toString());
+        }
+        if(xmlReader.name().toString() == "destination_time") {
+            QXmlStreamAttribute a = xmlReader.attributes().at(0);
+            t.set_destination_time(a.value().toString());
+        }
+        if (t.get_id()!=0 && t.get_destination_time()!="") {
+            new_list.append(t);
+            RailWayStation tn;
+            t = tn;
+        }
+    }
+
+    }
+    if(xmlReader.hasError()) {
+            QMessageBox::critical(this,
+            "xmlFile.xml Parse Error",xmlReader.errorString(),
+            QMessageBox::Ok);
+            return;
+    }
+    xmlReader.clear();
+    file.close();
+    list = new_list;
+    RailWayStation::fillByList(ui->tableWidget, list);
 }

@@ -18,6 +18,25 @@ public:
     void static fillByList(QTableWidget *tw, QList<RailWayStation> list);
     void static fillByObject(QTableWidget *tw, RailWayStation book);
     void static fillHeaders(QTableWidget *tw, QList<QString> list);
+    QString static get_id(RailWayStation t){
+        return QString::number(t.id);
+    }
+    QString static get_number(RailWayStation t){
+        return QString::number(t.number);
+    }
+    QString static get_destination_station(RailWayStation t){
+        return t.destination_station;
+    }
+    QString static get_dispatch_station(RailWayStation t){
+        return t.dispatch_station;
+    }
+    QString static get_destination_time(RailWayStation t){
+        return t.destination_time;
+    }
+    QString static get_dispatch_time(RailWayStation t){
+        return t.dispatch_time;
+    }
+
     int get_id(){
         return id;
     }
